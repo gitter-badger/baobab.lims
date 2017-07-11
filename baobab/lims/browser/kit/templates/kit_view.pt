@@ -1,0 +1,202 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+	xmlns:metal="http://xml.zope.org/namespaces/metal"
+	xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+	metal:use-macro="here/main_template/macros/master"
+	i18n:domain="bika">
+
+	<head>
+        <metal:javascript_head_slot fill-slot="javascript_head_slot"
+        tal:define="portal context/@@plone_portal_state/portal;">
+        <script type="text/javascript"
+                tal:attributes="src python:portal.absolute_url() + '/bika_widgets/referencewidget.js'"></script>
+        <script type="text/javascript" charset="utf-8">
+
+            (function($){
+                $(function(){
+                    var dataPost = {};
+                    $("input[id*='qtty-']").on("change", function (e) {
+                        var value = $(this).val();
+                        var prdUID = $(this).attr('pr-uid');
+                        var strUID = $(this).attr('st-uid');
+                        if(! dataPost[strUID]){
+                            dataPost[strUID] = [[prdUID, value]];
+                        }else {
+                            var found = false;
+                            $.each(dataPost[strUID], function (i, v) {
+                                if(v[0] == prdUID){
+                                    v[1] = value;
+                                    found = true;
+                                    return false;
+                                }
+                            });
+                            if(! found){
+                                dataPost[strUID].push([prdUID, value]);
+                            }
+                        }
+                        console.log(dataPost);
+                    });
+
+                    $("#assemble").on("click", function (e) {
+                        var path = window.location.href.split('/?')[0];
+                         $.ajax({
+                             dataType: "json",
+                             contentType: 'application/json',
+                             url: path + '/fetch_stock_prds',
+                             data: JSON.stringify(dataPost),
+                             success: function (data) {
+                                 if (data["error"]){
+                                     window.bika.lims.portalWarningMessage(data.error);
+                                 }
+                                 else{
+                                     window.bika.lims.portalInfoMessage("Stock Items Selected");
+                                 }
+                             }
+                         });
+                        e.preventDefault();
+                    });
+
+                    $("#StorageInventory_uid").on("focus", function (e) {
+                        var uid = $(this).val();
+                        var path = window.location.href.split('/?')[0];
+                        $.ajax({
+                            dataType: "json",
+                            contentType: 'application/json',
+                            url: path + '/available_stock',
+                            data: {'uid': uid},
+                            success: function (data) {
+                                if (data["error"]){
+                                    window.bika.lims.portalWarningMessage(data.error);
+                                }
+                                else{
+                                    $("#qty-available").html('<span style="color:green;">' + data + '</span>');
+                                }
+                            }
+                        });
+                    })
+                });
+            })(jQuery);
+
+        </script>
+        </metal:javascript_head_slot>
+
+        <metal:css fill-slot="style_slot">
+            <tal:css>
+                <style type="text/css"
+                       media="all">
+                    table{
+                        border-collapse: collapse;
+                    }
+                    tr{
+                        padding-top: .5em;
+                        padding-bottom: .5em;
+                    }
+                    div.print_document{
+                        display: inline-block;
+                        margin-right: 20px;
+                        margin-top: 5px;
+                        float:right;
+                    }
+                </style>
+            </tal:css>
+        </metal:css>
+    </head>
+
+	<body>
+
+		<metal:title fill-slot="content-title">
+            <div style="display:inline-block;">
+			<h1>
+				<span class="documentFirstHeading" tal:content="view/id" />
+			</h1>
+            </div>
+            <div class="print_document">
+                <a tal:attributes="href python:context.absolute_url()+'/print';" i18n:translate="" class="print_button">Print</a>
+            </div>
+		</metal:title>
+
+		<metal:core fill-slot="content-core"
+            tal:define="
+                    portal context/@@plone_portal_state/portal;
+                    attachments python:view.getAttachments();
+                    review_state python: context.portal_workflow.getInfoFor(context, 'review_state');
+                    attachments_allowed here/bika_setup/getAttachmentsPermitted;
+                    delete_attachments python:True;
+                    update_attachments python:True;
+                    pending python:context.portal_workflow.getInfoFor(context, 'review_state') == 'pending';
+                    completed python:context.portal_workflow.getInfoFor(context, 'review_state') == 'completed'">
+
+            <div tal:condition="attachments_allowed">
+                <metal:block use-macro="here/kitattachments/macros/attachments"/>
+            </div>
+
+            <table class="invoice-header">
+                <tbody>
+                <tr>
+                    <th i18n:translate="" style="padding-bottom: .5em;">Kit Title: </th>
+                    <td tal:content="view/title" style="padding-bottom: .5em;"></td>
+                </tr>
+                <tr>
+                    <th i18n:translate="" style="padding-bottom: .5em;">Kit Project: </th>
+                    <td tal:content="view/project" style="padding-bottom: .5em;"></td>
+                </tr>
+                <tr>
+                    <th i18n:translate="" style="padding-bottom: .5em;">Kit Template: </th>
+                    <td tal:content="view/kit_template_title" style="padding-bottom: .5em;"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table class="invoice-items items">
+                <thead>
+                <tr>
+                    <th i18n:translate="">Product</th>
+                    <th i18n:translate="">Quantity</th>
+                    <th i18n:translate="">Price</th>
+                    <th class="currency" i18n:translate="">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tal:items repeat="item view/items">
+                    <tal:item>
+                        <tr>
+                            <td tal:content="item/title"></td>
+                            <td class="number" tal:content="item/quantity"></td>
+                            <td class="currency">
+                                <span tal:content="item/price"></span>
+                            </td>
+                            <td class="currency">
+                                <span tal:content="item/total_price"></span>
+                            </td>
+                        </tr>
+                    </tal:item>
+                </tal:items>
+                <tr class="totals">
+                    <td colspan="3" i18n:translate="">Subtotal</td>
+                    <td class="currency">
+                        <span tal:content="python:view.getPreferredCurrencyAbreviation()">$</span>
+                        <span tal:content="view/subtotal"></span>
+                    </td>
+                </tr>
+                <tr class="totals">
+                    <td colspan="3" i18n:translate="">VAT</td>
+                    <td class="currency">
+                        <span tal:content="python:view.getPreferredCurrencyAbreviation()">$</span>
+                        <span tal:content="view/vat"></span>
+                    </td>
+                </tr>
+                <tr class="totals">
+                    <td colspan="3" i18n:translate="">Total</td>
+                    <td class="currency">
+                        <span tal:content="python:view.getPreferredCurrencyAbreviation()">$</span>
+                        <span tal:content="view/total"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+		</metal:core>
+
+	</body>
+
+</html>

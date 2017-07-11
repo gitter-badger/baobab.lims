@@ -1,2 +1,21 @@
-# baobab.lims
-Baobab LIMS is an open-source laboratory information management system (LIMS) software that will ensure that researchers can track the lifecycle of a biospecimen in the laboratory from receipt to storage and reuse. This software ensures that sufficient metadata is captured.
+Baobab LIMS
+===========
+An open source LIMS for human Biobanks. *Baobab* is a common name given to nine tree species in different countries in the world, mostly in Africa.  
+Baobab LIMS written in Plone, a python framework known for its robustness, and inherits some modules from Bika LIMS.
+
+Installation
+------------
+
+* Installing Baobab LIMS <https://github.com/hocinebendou/baobab.lims/wiki/Installation>
+
+Documentation
+-------------
+
+* User manual <https://b3abiobank.sanbi.ac.za/demo/manual.pdf>
+* Github Wiki <https://github.com/hocinebendou/baobab.lims/wiki>
+
+Feedback and Support
+--------------------
+
+* Sanbi Team on Slack <https://sanbi.slack.com/>
+* Issue Tracker: http://jira.bikalabs.com/

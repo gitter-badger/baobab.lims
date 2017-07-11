@@ -1,0 +1,92 @@
+div.invoice {
+    font-size: 0.8em;
+}
+div.invoice a {
+    color: #000;
+    text-decoration: none;
+}
+div.created-by a, div.prited-by a{
+    color: blue;
+}
+span.itext{
+    font-weight: bold;
+}
+
+#textbar fieldset {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #329fd7;
+    border-image: none;
+    border-style: solid none none;
+    border-width: 0.1em;
+}
+fieldset {
+    margin-top: 5px;
+    padding: 0.5em;
+}
+
+#textbar legend {
+    font-size: 85%;
+    padding: 0.5em;
+}
+
+
+div.section-invoice table tbody th {
+    padding:4px 0;
+    text-align: left;
+}
+
+
+table.invoice-items {
+    border: solid 1px #DDEEEE;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 13px Arial, sans-serif;
+    width:100%;
+}
+
+table.invoice-items thead th, table.invoice-items thead tr.header-bottom-total {
+    background-color: #DDEFEF;
+    border: solid 1px #DDEEEE;
+    color: #336B6B;
+    padding: 10px;
+    text-align: left;
+    text-shadow: 1px 1px 1px #fff;
+}
+table.invoice-items tbody td {
+    border: solid 1px #DDEEEE;
+    color: #333;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+@media print {
+    div.invoice {
+    }
+    div.section-items table thead th {
+        text-align:center;
+    }
+    div.section-items table tbody th {
+        white-space:normal;
+    }
+    div.content table div.barcode {
+        margin: 0 -10px;
+    }
+}
+
+table.invoice-header th {
+    align: left;
+    background-color: transparent;
+    padding-right: 5px !important;
+    width: 70px;;
+}
+
+table.invoice-header{
+    width: 100%;
+}
+
+div.lab-logo {
+    border: 1px dashed #cdcdcd;
+}

@@ -1,0 +1,65 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+
+#. Default: "Complete"
+#: ../profiles/default/workflows/bika_aliquot_workflow/definition.xml
+msgid "complete_biospecimen_transition_title"
+msgstr "Complete"
+
+#. Default: "Occupy"
+#: ../profiles/default/workflows/bika_storage_workflow/definition.xml
+msgid "occupy_transition_title"
+msgstr "Occupy"
+
+#. Default: "Dispatch"
+#: ../profiles/default/workflows/bika_shipments_workflow/definition.xml
+msgid "dispatch_shipment_transition_title"
+msgstr "Dispatch"
+
+#. Default: "Receive"
+#: ../profiles/default/workflows/bika_shipments_workflow/definition.xml
+msgid "receive_kit_transition_title"
+msgstr "Receive"
+
+#. Default: "Receive"
+#: ../profiles/default/workflows/bika_shipments_workflow/definition.xml
+msgid "receive_shipment_transition_title"
+msgstr "Receive"
+
+#. Default: "Collect"
+#: ../profiles/default/workflows/bika_shipments_workflow/definition.xml
+msgid "collect_transition_title"
+msgstr "Collect"
+
+#. Default: "Process"
+#: ../profiles/default/workflows/bika_shipments_workflow/definition.xml
+msgid "process_transition_title"
+msgstr "Process"
+
+#. Default: "Liberate"
+#: ../profiles/default/workflows/bika_storage_workflow/definition.xml
+msgid "liberate_transition_title"
+msgstr "Liberate"
+
+#. Default: "Ship"
+#: ../profiles/default/workflows/bika_kit_assembly_workflow/definition.xml
+msgid "ship_transition_title"
+msgstr "Ship"
+
+#. Default: "Sample due"
+#: ../profiles/default/workflows/bika_sample_workflow/definition.xml
+msgid "sample_due_transition_title"
+msgstr "Register"
